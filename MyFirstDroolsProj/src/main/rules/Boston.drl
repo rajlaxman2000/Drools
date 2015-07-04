@@ -1,0 +1,26 @@
+//created on: Jun 29, 2015
+package RulePackage
+
+//list any import classes here.
+import com.sample.ItemCity;
+import java.math.BigDecimal;
+
+//declare any global variables here
+dialect "java"
+
+rule "Boston Medicine Item"
+when
+     item : ItemCity(purchaseCity == ItemCity.City.Boston, typeofItem == ItemCity.Type.MEDICINES)
+then
+     BigDecimal tax = new BigDecimal(0.0);
+     item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
+
+
+rule "Boston Groceries Item"
+when
+      item : ItemCity(purchaseCity == ItemCity.City.Boston, typeofItem == ItemCity.Type.GROCERIES)
+then
+     BigDecimal tax = new BigDecimal(1.0);
+     item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
